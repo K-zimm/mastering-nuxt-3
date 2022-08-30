@@ -1,14 +1,12 @@
 <template>
-  <div class="flex">
-    <div>Side bar</div>
+  <div>
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  middleware: ['auth']
-  // or middleware: 'auth'
+  layout: 'auth'
 });
 </script>
 

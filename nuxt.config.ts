@@ -8,7 +8,11 @@ export default defineNuxtConfig({
   modules: ['nuxt-graphql-client', '@nuxtjs/tailwindcss'],
   runtimeConfig: {
     public: {
-      GQL_HOST: 'http://localhost:4000/graphql'
+      GQL_HOST: 'http://localhost:4000/graphql',
+      apiBase: ''
     }
+  },
+  experimental: {
+    reactivityTransform: true
   }
 });

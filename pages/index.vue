@@ -9,6 +9,8 @@ definePageMeta({
   middleware: ['auth']
   // or middleware: 'auth'
 });
+
+const user = useState('user');
 </script>
 
 <style scoped></style>

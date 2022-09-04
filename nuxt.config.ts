@@ -14,5 +14,8 @@ export default defineNuxtConfig({
   },
   experimental: {
     reactivityTransform: true
+  },
+  build: {
+    analyze: true
   }
 });

@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   typescript: {
     shim: false
   },
-  modules: ['nuxt-graphql-client', '@nuxtjs/tailwindcss'],
+  modules: ['nuxt-graphql-client', '@nuxtjs/tailwindcss', '@pinia/nuxt'],
   runtimeConfig: {
     public: {
       GQL_HOST: 'http://localhost:4000/graphql',

@@ -32,6 +32,21 @@ const login = async () => {
       errors.push(err.response._data);
     });
 };
+
+const forgotPass = async () => {
+  await $fetch(`${apiBase}/api/auth/forgotPass`, {
+    method: 'POST',
+    body: { email }
+  })
+    .then((response) => {
+      if (response.success) {
+        navigateTo('/auth/pass-reset');
+      }
+    })
+    .catch((err) => {
+      errors.push(err.response._data);
+    });
+};
 </script>
 
 <template>
@@ -85,7 +100,9 @@ const login = async () => {
             </div>
 
             <div class="text-sm">
-              <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> Forgot your password? </a>
+              <div class="font-medium text-indigo-600 hover:text-indigo-500" @click="forgotPass">
+                Forgot your password?
+              </div>
             </div>
           </div>
 

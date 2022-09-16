@@ -23,8 +23,10 @@
     "prettier": "^2.7.1"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.4.1",
     "@vee-validate/zod": "^4.6.7",
     "nuxt-graphql-client": "^0.1.12",
+    "pinia": "^2.0.21",
     "vee-validate": "^4.6.7",
     "zod": "^3.10.0-beta.1"
   }

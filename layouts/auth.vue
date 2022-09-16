@@ -4,10 +4,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-definePageMeta({
-  layout: 'auth'
-});
-</script>
+<script setup lang="ts"></script>
 
 <style scoped></style>

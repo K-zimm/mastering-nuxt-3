@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   typescript: {
     shim: false
   },
+  css: ['@/assets/styles/main.scss'],
   modules: ['nuxt-graphql-client', '@nuxtjs/tailwindcss', '@pinia/nuxt'],
   runtimeConfig: {
     public: {

@@ -23,7 +23,7 @@ const login = async () => {
   })
     .then((response: LoginResponse) => {
       if (response.success) {
-        const cookie = useCookie('authorization');
+        const cookie = useCookie('resetToken');
         cookie.value = response.token;
         navigateTo('/');
       }
@@ -38,8 +38,10 @@ const forgotPass = async () => {
     method: 'POST',
     body: { email }
   })
-    .then((response) => {
+    .then((response: LoginResponse) => {
       if (response.success) {
+        const cookie = useCookie('authorization');
+        cookie.value = response.token;
         navigateTo('/auth/pass-reset');
       }
     })

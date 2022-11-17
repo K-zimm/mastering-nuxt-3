@@ -15,12 +15,18 @@ definePageMeta({
 const apiBase = useRuntimeConfig().public.apiBase;
 
 const validationSchema = toFormValidator(
-  zod.object({
-    firstName: zod.string().nonempty('First Name is required'),
-    lastName: zod.string().nonempty('Last Name is required'),
-    email: zod.string().nonempty('Email is required').email({ message: 'Must be a valid email' }),
-    password: zod.string().nonempty('Password is required').min(8, { message: 'Password must be 8 characters long' })
-  })
+  zod
+    .object({
+      firstName: zod.string().nonempty('First Name is required'),
+      lastName: zod.string().nonempty('Last Name is required'),
+      email: zod.string().nonempty('Email is required').email({ message: 'Must be a valid email' }),
+      password: zod.string().nonempty('Password is required').min(8, { message: 'Password must be 8 characters long' }),
+      confirm: zod.string().nonempty('Confirm Password')
+    })
+    .refine((data) => data.password === data.confirm, {
+      message: "Passwords don't match",
+      path: ['confirm']
+    })
 );
 const { handleSubmit, errors } = useForm({
   validationSchema
@@ -29,6 +35,8 @@ const { value: firstName } = useField('firstName', null, { validateOnValueUpdate
 const { value: lastName } = useField('lastName', null, { validateOnValueUpdate: false });
 const { value: email } = useField('email', null, { validateOnValueUpdate: false });
 const { value: password } = useField('password', null, { validateOnValueUpdate: false });
+const { value: confirm } = useField('confirm', null, { validateOnValueUpdate: false });
+
 let serverErrors = $ref([]);
 const onSubmit = handleSubmit(async (values) => {
   serverErrors = [];
@@ -71,21 +79,36 @@ const onSubmit = handleSubmit(async (values) => {
             <label for="firstName" class="block text-sm font-medium text-gray-700"> First Name </label>
             <div class="mt-1">
               <input name="firstName" v-model="firstName" type="text" class="input__text" />
-              <span>{{ errors.firstName }}</span>
+              <transition name="slide-up">
+                <span v-if="errors.firstName">{{ errors.firstName }}</span>
+              </transition>
             </div>
           </div>
           <div>
             <label for="lastName" class="block text-sm font-medium text-gray-700"> Last Name </label>
             <div class="mt-1">
               <input name="lastName" v-model="lastName" type="text" class="input__text" />
-              <span>{{ errors.lastName }}</span>
+              <transition name="slide-up">
+                <span v-if="errors.lastName">{{ errors.lastName }}</span>
+              </transition>
             </div>
           </div>
           <div>
             <label for="lastName" class="block text-sm font-medium text-gray-700"> Password </label>
             <div class="mt-1">
               <input name="password" v-model="password" type="password" class="input__text" />
-              <span>{{ errors.password }}</span>
+              <transition name="slide-up">
+                <span v-if="errors.password">{{ errors.password }}</span>
+              </transition>
+            </div>
+          </div>
+          <div>
+            <label for="lastName" class="block text-sm font-medium text-gray-700">Confirm Password </label>
+            <div class="mt-1">
+              <input name="password" v-model="confirm" type="password" class="input__text" />
+              <transition name="slide-up">
+                <span v-if="errors.confirm">{{ errors.confirm }}</span>
+              </transition>
             </div>
           </div>
           <button>Submit</button>

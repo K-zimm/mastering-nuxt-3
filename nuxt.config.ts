@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   typescript: {
     shim: false
   },
-  css: ['@/assets/styles/main.scss'],
+  css: ['@fortawesome/fontawesome-svg-core/styles.css', '@/assets/styles/main.scss'],
   modules: ['nuxt-graphql-client', '@nuxtjs/tailwindcss', '@pinia/nuxt'],
   runtimeConfig: {
     public: {
@@ -17,6 +17,12 @@ export default defineNuxtConfig({
     reactivityTransform: true
   },
   build: {
-    analyze: true
+    analyze: true,
+    transpile: [
+      '@headlessui/vue',
+      '@fortawesome/vue-fontawesome',
+      '@fortawesome/fontawesome-svg-core',
+      '@fortawesome/free-solid-svg-icons'
+    ]
   }
 });

@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 type User = {
   _id: string;
   email: string;
+  imageUrl: string;
   name: string;
 } | null;
 

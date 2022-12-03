@@ -1,16 +1,14 @@
-<template>
-  <div>
-    <h1>Inkbook</h1>
-  </div>
-</template>
-
 <script setup lang="ts">
 definePageMeta({
   middleware: ['auth']
   // or middleware: 'auth'
 });
-
-const user = useState('user');
 </script>
+
+<template>
+  <div class="p-8">
+    <h1 class="text-2xl">Inkbook</h1>
+  </div>
+</template>
 
 <style scoped></style>

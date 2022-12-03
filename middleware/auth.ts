@@ -6,6 +6,7 @@ interface userResponse {
   user: {
     _id: string;
     email: string;
+    imageUrl: string;
     name: string;
   };
 }
@@ -18,11 +19,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
   if (!auth.value) {
     if (to.path !== '/auth/login') return '/auth/login';
   } else {
-    console.log('Or dont');
     if (!authStore.user) {
-      console.log('the fuck');
       await useApi('/auth/user').then((res: userResponse) => {
-        console.log(res);
         if (res.success) {
           authStore.user = res.user;
           return true;

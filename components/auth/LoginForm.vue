@@ -1,9 +1,4 @@
 <script setup lang="ts">
-interface Props {
-  email?: string;
-  password?: string;
-}
-
 interface LoginResponse {
   success: boolean;
   token: string;
@@ -11,7 +6,8 @@ interface LoginResponse {
 
 const apiBase = useRuntimeConfig().public.apiBase;
 
-const { email = '', password = '' } = defineProps<Props>();
+const email = $ref('');
+const password = $ref('');
 
 let errors = $ref([]);
 

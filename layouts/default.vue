@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth';
 import {
   Dialog,
   DialogPanel,
@@ -10,11 +9,9 @@ import {
   TransitionChild,
   TransitionRoot
 } from '@headlessui/vue';
-definePageMeta({
-  middleware: ['auth']
-  // or middleware: 'auth'
-});
-const user = useAuthStore().user;
+const { data, signOut } = useSession();
+
+const user = data.value?.user;
 
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -29,9 +26,7 @@ const sidebarNavigation = [
 const mobileMenuOpen = ref(false);
 
 const logout = () => {
-  const auth = useCookie('authorization');
-  auth.value = null;
-  navigateTo('/auth/login');
+  signOut();
 };
 </script>
 
@@ -92,7 +87,7 @@ const logout = () => {
                 class="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
               >
                 <span class="sr-only">Open user menu</span>
-                <img v-if="user.imageUrl" class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" />
+                <img v-if="user?.image" class="h-8 w-8 rounded-full" :src="user.image" alt="" />
                 <div v-else class="h-8 w-8 rounded-full bg-gray-200 flex justify-center items-center">
                   <font-awesome-icon :icon="['fas', 'user']" class="text-lg text-gray-600" />
                 </div>
@@ -116,9 +111,12 @@ const logout = () => {
                       >
                     </MenuItem>
                     <MenuItem v-slot="{ active }">
-                      <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
-                        >Sign Out</a
+                      <div
+                        @click="logout"
+                        :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
                       >
+                        Sign Out
+                      </div>
                     </MenuItem>
                   </div>
                 </MenuItems>
@@ -217,11 +215,11 @@ const logout = () => {
                 <div class="border-t border-gray-200 pt-4 pb-3">
                   <div class="max-w-8xl mx-auto flex items-center px-4 sm:px-6">
                     <div class="flex-shrink-0">
-                      <img class="h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
+                      <img v-if="user?.image" class="h-10 w-10 rounded-full" :src="user?.image" alt="" />
                     </div>
                     <div class="ml-3 min-w-0 flex-1">
-                      <div class="truncate text-base font-medium text-gray-800">{{ user.name }}</div>
-                      <div class="truncate text-sm font-medium text-gray-500">{{ user.email }}</div>
+                      <div class="truncate text-base font-medium text-gray-800">{{ user?.name }}</div>
+                      <div class="truncate text-sm font-medium text-gray-500">{{ user?.email }}</div>
                     </div>
                     <a href="#" class="ml-auto flex-shrink-0 bg-white p-2 text-gray-400 hover:text-gray-500">
                       <span class="sr-only">View notifications</span>

@@ -11,7 +11,15 @@ export default defineNuxtConfig({
       apiBase: '',
       dev: process.env.NODE_ENV !== 'production'
     },
-    private: { databaseUrl: '', googleClientId: '', googleClientSecret: '' }
+    private: {
+      databaseUrl: '',
+      googleClientId: '',
+      googleClientSecret: '',
+      emailServerHost: '',
+      emailServerPort: '',
+      emailServerUser: '',
+      emailServerPassword: ''
+    }
   },
   experimental: {
     reactivityTransform: true

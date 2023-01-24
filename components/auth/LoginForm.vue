@@ -15,40 +15,40 @@ const { getProviders, signIn } = useSession();
 
 const providers = await getProviders();
 
-const login = async () => {
-  errors = [];
-  await $fetch(`${apiBase}/api/auth/login`, {
-    method: 'POST',
-    body: { email, password }
-  })
-    .then((response: LoginResponse) => {
-      if (response.success) {
-        const cookie = useCookie('authorization');
-        cookie.value = response.token;
-        navigateTo('/');
-      }
-    })
-    .catch((err) => {
-      errors.push(err.response._data);
-    });
-};
+// const login = async () => {
+//   errors = [];
+//   await $fetch(`${apiBase}/api/auth/login`, {
+//     method: 'POST',
+//     body: { email, password }
+//   })
+//     .then((response: LoginResponse) => {
+//       if (response.success) {
+//         const cookie = useCookie('authorization');
+//         cookie.value = response.token;
+//         navigateTo('/');
+//       }
+//     })
+//     .catch((err) => {
+//       errors.push(err.response._data);
+//     });
+// };
 
-const forgotPass = async () => {
-  await $fetch(`${apiBase}/api/auth/forgotPass`, {
-    method: 'POST',
-    body: { email }
-  })
-    .then((response: LoginResponse) => {
-      if (response.success) {
-        const cookie = useCookie('resetToken');
-        cookie.value = response.token;
-        navigateTo('/auth/pass-reset');
-      }
-    })
-    .catch((err) => {
-      errors.push(err.response._data);
-    });
-};
+// const forgotPass = async () => {
+//   await $fetch(`${apiBase}/api/auth/forgotPass`, {
+//     method: 'POST',
+//     body: { email }
+//   })
+//     .then((response: LoginResponse) => {
+//       if (response.success) {
+//         const cookie = useCookie('resetToken');
+//         cookie.value = response.token;
+//         navigateTo('/auth/pass-reset');
+//       }
+//     })
+//     .catch((err) => {
+//       errors.push(err.response._data);
+//     });
+// };
 </script>
 
 <template>
@@ -132,7 +132,7 @@ const forgotPass = async () => {
               <a
                 href="#"
                 class="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
-                @click="signIn(provider?.id)"
+                @click="signIn(provider?.id, { callbackUrl: '/' })"
               >
                 <span class="sr-only">Sign in with {{ provider?.name }}</span>
                 <font-awesome-icon :icon="['fab', `fa-${provider?.name.toLowerCase()}`]" />

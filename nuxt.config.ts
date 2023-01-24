@@ -18,7 +18,8 @@ export default defineNuxtConfig({
       emailServerHost: '',
       emailServerPort: '',
       emailServerUser: '',
-      emailServerPassword: ''
+      emailServerPassword: '',
+      authSecret: ''
     }
   },
   experimental: {
@@ -34,6 +35,7 @@ export default defineNuxtConfig({
     ]
   },
   auth: {
-    enableGlobalAppMiddleware: true
+    enableGlobalAppMiddleware: true,
+    origin: process.env.ORIGIN || 'http://localhost:3000'
   }
 });

@@ -9,9 +9,9 @@ import {
   TransitionChild,
   TransitionRoot
 } from '@headlessui/vue';
-const { data, signOut } = useSession();
+const { data: session, signOut } = useSession();
 
-const user = data.value?.user;
+const user = session.value?.user;
 
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -19,8 +19,8 @@ const userNavigation = [
 ];
 
 const sidebarNavigation = [
-  { name: 'Messages', href: '#', icon: ['fas', 'inbox'], current: true },
-  { name: 'Customers', href: '#', icon: ['fas', 'address-card'], current: false }
+  { name: 'Dashboard', href: '/', icon: ['fas', 'money-bill-trend-up'], current: true },
+  { name: 'Customers', href: '/customers', icon: ['fas', 'address-card'], current: false }
 ];
 
 const mobileMenuOpen = ref(false);
@@ -196,7 +196,7 @@ const logout = () => {
                         item.current
                           ? 'bg-indigo-800 text-white'
                           : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
-                        'group py-2 px-3 rounded-md flex items-center text-sm font-medium'
+                        'group py-2 px-3 rounded-md flex items-center'
                       ]"
                       :aria-current="item.current ? 'page' : undefined"
                     >
@@ -204,11 +204,11 @@ const logout = () => {
                         :icon="item.icon"
                         :class="[
                           item.current ? 'text-white' : 'text-indigo-300 group-hover:text-white',
-                          'mr-3 h-6 w-6'
+                          'mr-3 h-6 w-6 text-lg'
                         ]"
                         aria-hidden="true"
                       />
-                      <span>{{ item.name }}</span>
+                      <span class="text-sm font-medium">{{ item.name }}</span>
                     </a>
                   </div>
                 </div>
@@ -252,16 +252,16 @@ const logout = () => {
             :href="item.href"
             :class="[
               item.current ? 'bg-indigo-800 text-white' : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
-              'group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium'
+              'group w-full p-3 rounded-md flex flex-col items-center'
             ]"
             :aria-current="item.current ? 'page' : undefined"
           >
             <font-awesome-icon
               :icon="item.icon"
-              :class="[item.current ? 'text-white' : 'text-indigo-300 group-hover:text-white', 'h-6 w-6']"
+              :class="[item.current ? 'text-white' : 'text-indigo-300 group-hover:text-white', 'h-6 w-6 text-lg']"
               aria-hidden="true"
             />
-            <span class="mt-2">{{ item.name }}</span>
+            <span class="mt-2 text-xs font-medium">{{ item.name }}</span>
           </a>
         </div>
       </nav>

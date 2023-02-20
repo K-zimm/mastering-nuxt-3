@@ -18,12 +18,18 @@ const userNavigation = [
   { name: 'Sign out', href: '#' }
 ];
 
-const sidebarNavigation = [
+const sidebarNavigation = $ref([
   { name: 'Dashboard', href: '/', icon: ['fas', 'money-bill-trend-up'], current: true },
   { name: 'Customers', href: '/customers', icon: ['fas', 'address-card'], current: false }
-];
+]);
 
 const mobileMenuOpen = ref(false);
+
+const setCurrent = (index: number) => {
+  sidebarNavigation.forEach((navItem, i) => {
+    navItem.current = i === index;
+  });
+};
 
 const logout = () => {
   signOut();
@@ -33,7 +39,7 @@ const logout = () => {
 <template>
   <div class="flex h-full flex-col">
     <!-- Top nav-->
-    <header class="relative flex h-16 flex-shrink-0 items-center bg-white">
+    <header class="relative flex h-16 flex-shrink-0 items-center">
       <!-- Logo area -->
       <div class="absolute inset-y-0 left-0 md:static md:flex-shrink-0">
         <a
@@ -58,7 +64,9 @@ const logout = () => {
       </div>
 
       <!-- Desktop nav area -->
-      <div class="hidden md:flex md:min-w-0 md:flex-1 md:items-center md:justify-between">
+      <div
+        class="hidden md:flex md:min-w-0 md:flex-1 md:items-center md:justify-between md:my-3 md:mx-4 md:bg-white md:p-2 md:rounded-xl md:shadow-sm"
+      >
         <div class="min-w-0 flex-1">
           <div class="relative max-w-2xl text-gray-400 focus-within:text-gray-500">
             <label for="desktop-search" class="sr-only">Search</label>
@@ -246,15 +254,16 @@ const logout = () => {
       <!-- Narrow sidebar-->
       <nav aria-label="Sidebar" class="hidden md:block md:flex-shrink-0 md:overflow-y-auto md:bg-gray-800">
         <div class="relative flex w-28 flex-col space-y-3 p-3">
-          <a
-            v-for="item in sidebarNavigation"
+          <NuxtLink
+            v-for="(item, index) in sidebarNavigation"
             :key="item.name"
-            :href="item.href"
+            :to="item.href"
             :class="[
               item.current ? 'bg-indigo-800 text-white' : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
               'group w-full p-3 rounded-md flex flex-col items-center'
             ]"
             :aria-current="item.current ? 'page' : undefined"
+            @click.prvent="setCurrent(index)"
           >
             <font-awesome-icon
               :icon="item.icon"
@@ -262,12 +271,12 @@ const logout = () => {
               aria-hidden="true"
             />
             <span class="mt-2 text-xs font-medium">{{ item.name }}</span>
-          </a>
+          </NuxtLink>
         </div>
       </nav>
 
       <!-- Main area -->
-      <main class="min-w-0 flex-1 border-t border-gray-200 lg:flex">
+      <main class="min-w-0 flex-1">
         <section aria-labelledby="primary-heading" class="flex h-full min-w-0 flex-1 flex-col overflow-y-auto">
           <slot />
         </section>
